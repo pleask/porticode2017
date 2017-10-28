@@ -26,18 +26,18 @@ df = pd.read_csv("./NYSEcut.csv")
 
 data_list = []
 cell_list = []
-bad_list = [] 
+
 
 count = 0
 
 for cell in (df['symbols']):
     try:
+        cell_list.append(cell)
         data_list.append(get_historical_data(cell, number_of_days))
         count = count + 1
-        print(count)
-        cell_list.append(cell) 
+        print(count) 
     except:
-        print(bad_list.append(cell))
+        pass
 
 with open('stock_names_saved', 'w') as fout:
     json.dump(cell_list, fout)
@@ -45,6 +45,3 @@ with open('stock_names_saved', 'w') as fout:
 
 with open('data_list_saved', 'w') as fout2:
     json.dump(data_list, fout2)
-
-with open('bad_list_saved', 'w') as fout2:
-    json.dump(bad_list, fout2)
