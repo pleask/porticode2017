@@ -41,9 +41,9 @@ class TwitterClient(object):
         '''
         return ' '.join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)", " ", tweet).split())
 
-    
+
     sentiment = []
-    
+
     def get_tweet_sentiment(self, tweet):
         '''
         Utility function to classify sentiment of passed tweet
@@ -100,7 +100,7 @@ class TwitterClient(object):
 
 
 def maintwitter(word):
-    
+
     # in case length of tweets found here is 0
     posTweetsCompany = 0
     negTweetsCompany = 0
@@ -108,7 +108,7 @@ def maintwitter(word):
     negTweetsStock = 0
     posTweetsBlank = 0
     negTweetsBlank = 0
-    
+
     # creating object of TwitterClient Class
     api = TwitterClient()
     # calling function to get tweets
@@ -171,11 +171,11 @@ def maintwitter(word):
     #print("Overall positive percentage:", posOverall)
     #print("Overall negative percentage:", negOverall)
     #print("Average polarity score:", numpy.mean(sentiment))
-    
-    d = {"company": word, "postive": posOverall, "negative":negOverall, "score":numpy.mean(sentiment), 
+
+    d = {"company": word, "positive": posOverall, "negative":negOverall, "score":numpy.mean(sentiment), 
          "posComp": posTweetsCompany, "negComp": negTweetsCompany, "posSto": posTweetsStock,
          "negSto": negTweetsStock, "posWord":posTweetsBlank, "negWord":negTweetsBlank}
-    
+
     return(d)
 
 
