@@ -124,7 +124,7 @@ DataStore.prototype.clickUpdater = function (symbol) {
   }
 
   // here we get the data from the server
-  console.log(symbol);
+  console.log(symbol, this);
 };
 
 var StockChart = function (canvasID) {
@@ -185,7 +185,7 @@ var StockList = function (tableID, datastore) {
 StockList.prototype.setStocks = function (stocks) {
   var that = this;
   $.get('/stocklist', function (data) {
-    that.stocks = data;
+    that.stocks = JSON.parse(data);
     that.writeLines();
   });
 };
@@ -207,7 +207,7 @@ StockList.prototype.writeLines = function () {
         <tr class="stockrow" data-symbol="${stock.symbols}">
           <td>${stock.symbols}</td>
           <td>${stock.Description}</td>
-          <td>${stock.value}</td>
+          <td>${stock.price}</td>
           <td>${stock.predicted}</td>
         </tr>
       `
@@ -222,21 +222,6 @@ StockList.prototype.writeLines = function () {
 
 };
 
-function getCurrentStockPrice(symbol) {
-  $.ajax({
-    type: "POST",
-    url: "/currentprice",
-    contentType: "application/json",
-    data: JSON.stringify({'data':symbol}),
-    dataType:'json',
-    success: function (response) {
-      console.log(response);
-    },
-    error: function (err) {
-      console.log('error', err);
-    }
-  });
-};
 
 $(document).ready(function () {
 
