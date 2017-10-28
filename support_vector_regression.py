@@ -1,7 +1,6 @@
 from sklearn.svm import SVR 
 from yahoo_finance import Share 
 import numpy as np 
-#import matplotlib.pyplot as plt 
 import urllib2
 from BeautifulSoup import BeautifulSoup as bs
 
@@ -26,7 +25,9 @@ def get_historical_data(name, number_of_days):
 
 data = get_historical_data(stock_code, int(past_days))
 
+
 stock_list = [] 
+
 
 for i in data:
   stock_list.append((i['Open']))
@@ -40,15 +41,10 @@ def predict_prices(prices, days_to_predict_in_future):
     svr_rbf.fit(days, prices.ravel()) 
     predict_days = (int(days_to_predict_in_future))
     max_day = 2 + max(days) + predict_days
-    min_day = max(days) + 2
-    print(max_day)
-    print(min_day) 
+    min_day = max(days) + 2 
     days_to_predict = np.arange(min_day, max_day, 1) 
     days_to_predict = days_to_predict.reshape(-1, 1)
-    #plt.plot(days, svr_rbf.predict(days), color = "red", label = "training") 
-    #plt.plot((days + days_to_predict_in_future), svr_rbf.predict(days + days_to_predict_in_future), color = "blue", label = "predicted")
-    #plt.legend()
-    #plt.show()
+    
     return svr_rbf.predict(days_to_predict)
 
 print(predict_prices(stock_list, future_days))
