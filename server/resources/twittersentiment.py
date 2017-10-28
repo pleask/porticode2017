@@ -141,7 +141,7 @@ def maintwitter(word):
     # picking negative tweets from tweets
     ntweets = [tweet for tweet in tweets if tweet['sentiment'] == 'negative']
     # percentage of negative tweets
-    print("Negative tweets percentage: {} %".format(100*len(ntweets)/len(tweets)))
+    #print("Negative tweets percentage: {} %".format(100*len(ntweets)/len(tweets)))
     negTweetsBlank = 100*len(ntweets)/len(tweets)
 
 
