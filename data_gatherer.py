@@ -2,12 +2,12 @@ from sklearn.svm import SVR
 from yahoo_finance import Share
 import numpy as np
 import urllib.request
-import pandas as pd 
-from BeautifulSoup import BeautifulSoup as bs                                                                                                   
-import json 
+import pandas as pd
+from BeautifulSoup import BeautifulSoup as bs
+import json
 
 
-number_of_days = 365 * 2  
+number_of_days = 365 * 2
 
 def get_historical_data(name, number_of_days):
     data = []
@@ -22,21 +22,21 @@ def get_historical_data(name, number_of_days):
     return data[:number_of_days]
 
 
-df = pd.read_csv("/Users/augustinemavor-parker/Desktop/NYSE.csv")
+df = pd.read_csv("./NYSE.csv")
 
 data_list = []
-cell_list = [] 
+cell_list = []
 
 
-count = 0 
+count = 0
 
-for cell in (df['symbols']): 
-    try:    
+for cell in (df['symbols']):
+    try:
         cell_list.append(cell)
         data_list.append(get_historical_data(cell, number_of_days))
-        count = count + 1 
-    except: 
-        pass 
+        count = count + 1
+    except:
+        pass
 
 with open('stock_names_saved', 'w') as fout:
     json.dump(cell_list, fout)

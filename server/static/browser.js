@@ -183,8 +183,11 @@ var StockList = function (tableID, datastore) {
 };
 
 StockList.prototype.setStocks = function (stocks) {
-  this.stocks = stocks;
-  this.writeLines();
+  var that = this;
+  $.get('/stocklist', function (data) {
+    that.stocks = data;
+    that.writeLines();
+  });
 };
 
 /*stocks will look like
@@ -199,12 +202,11 @@ StockList.prototype.setStocks = function (stocks) {
 StockList.prototype.writeLines = function () {
   var that = this;
   this.stocks.forEach(function (stock) {
-
     that.table.append(
       `
-        <tr class="stockrow" data-symbol="${stock.symbol}">
-          <td>${stock.symbol}</td>
-          <td>${stock.name}</td>
+        <tr class="stockrow" data-symbol="${stock.symbols}">
+          <td>${stock.symbols}</td>
+          <td>${stock.Description}</td>
           <td>${stock.value}</td>
           <td>${stock.predicted}</td>
         </tr>
@@ -220,6 +222,22 @@ StockList.prototype.writeLines = function () {
 
 };
 
+function getCurrentStockPrice(symbol) {
+  $.ajax({
+    type: "POST",
+    url: "/currentprice",
+    contentType: "application/json",
+    data: JSON.stringify({'data':symbol}),
+    dataType:'json',
+    success: function (response) {
+      console.log(response);
+    },
+    error: function (err) {
+      console.log('error', err);
+    }
+  });
+};
+
 $(document).ready(function () {
 
   var testdata = new DataStore();
@@ -228,75 +246,55 @@ $(document).ready(function () {
 
   testdata.addObserver(testUser);
 
-  testdata.addData(sampleData);
-  testdata.addData(sampleData2);
-  testdata.addData(sampleData3);
-  testdata.addData(sampleData4);
-  // testdata.removeData('AAPL');
-
   var stocks = new StockList ('stocktable', testdata);
-  stocks.setStocks(
-    [
-      {
-        'symbol':'AAPL',
-        'name':'Apple',
-        'value':384,
-        'predicted':0.04
-      },{
-        'symbol':'GOOG',
-        'name':'Google',
-        'value':783,
-        'predicted':-0.02
-      }
-    ]
-  );
+  stocks.setStocks();
 });
 
 
-var sampleData = {
-  'name': 'AAPL',
-  'data': [
-    {'date': '2017-07-24', 'price': '152.09'},
-    {'date': '2017-07-25', 'price': '152.74'},
-    {'date': '2017-07-25', 'price': '152.74'},
-    {'date': '2017-07-26', 'price': '153.46'}
-  ],
-  'startDate': '2017-07-24',
-  'endDate': '2017-08-04'
-};
-
-var sampleData2 = {
-  'name': 'GOOG',
-  'data': [
-    {'date': '2017-07-24', 'price': '162.09'},
-    {'date': '2017-07-25', 'price': '162.74'},
-    {'date': '2017-07-25', 'price': '162.74'},
-    {'date': '2017-07-26', 'price': '163.46'}
-  ],
-  'startDate': '2017-07-24',
-  'endDate': '2017-08-04'
-};
-
-var sampleData3 = {
-  'name': 'AMAZ',
-  'data': [
-    {'date': '2017-07-24', 'price': '172.09'},
-    {'date': '2017-07-25', 'price': '172.74'},
-    {'date': '2017-07-25', 'price': '172.74'},
-    {'date': '2017-07-26', 'price': '173.46'}
-  ],
-  'startDate': '2017-07-24',
-  'endDate': '2017-08-04'
-};
-
-var sampleData4 = {
-  'name': 'MCST',
-  'data': [
-    {'date': '2017-07-24', 'price': '182.09'},
-    {'date': '2017-07-25', 'price': '182.74'},
-    {'date': '2017-07-25', 'price': '182.74'},
-    {'date': '2017-07-26', 'price': '183.46'}
-  ],
-  'startDate': '2017-07-24',
-  'endDate': '2017-08-04'
-};
+// var sampleData = {
+//   'name': 'AAPL',
+//   'data': [
+//     {'date': '2017-07-24', 'price': '152.09'},
+//     {'date': '2017-07-25', 'price': '152.74'},
+//     {'date': '2017-07-25', 'price': '152.74'},
+//     {'date': '2017-07-26', 'price': '153.46'}
+//   ],
+//   'startDate': '2017-07-24',
+//   'endDate': '2017-08-04'
+// };
+//
+// var sampleData2 = {
+//   'name': 'GOOG',
+//   'data': [
+//     {'date': '2017-07-24', 'price': '162.09'},
+//     {'date': '2017-07-25', 'price': '162.74'},
+//     {'date': '2017-07-25', 'price': '162.74'},
+//     {'date': '2017-07-26', 'price': '163.46'}
+//   ],
+//   'startDate': '2017-07-24',
+//   'endDate': '2017-08-04'
+// };
+//
+// var sampleData3 = {
+//   'name': 'AMAZ',
+//   'data': [
+//     {'date': '2017-07-24', 'price': '172.09'},
+//     {'date': '2017-07-25', 'price': '172.74'},
+//     {'date': '2017-07-25', 'price': '172.74'},
+//     {'date': '2017-07-26', 'price': '173.46'}
+//   ],
+//   'startDate': '2017-07-24',
+//   'endDate': '2017-08-04'
+// };
+//
+// var sampleData4 = {
+//   'name': 'MCST',
+//   'data': [
+//     {'date': '2017-07-24', 'price': '182.09'},
+//     {'date': '2017-07-25', 'price': '182.74'},
+//     {'date': '2017-07-25', 'price': '182.74'},
+//     {'date': '2017-07-26', 'price': '183.46'}
+//   ],
+//   'startDate': '2017-07-24',
+//   'endDate': '2017-08-04'
+// };

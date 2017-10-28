@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, jsonify
-from resources import twittersentiment
-
+from resources import twittersentiment, stocklist, stocks
 
 app = Flask(__name__)
 
@@ -24,12 +23,25 @@ def sentiment():
 def profile():
     return render_template("profile.html")
 
-
 @app.route('/twitter', methods = ['POST'])
 def get_twitter():
     jsdata = request.get_json()
     print(jsdata)
-    return jsonify(twittersentiment.maintwitter(jsdata['data']))
+    try:
+        data = jsonify(twittersentiment.maintwitter(jsdata['data']))
+    except TypeError:
+        data = "Twitter is dead"
+    return data
+
+@app.route('/stocklist')
+def get_stocks():
+    return jsonify(stocklist.getlist())
+
+@app.route('/currentprice', methods = ['POST'])
+def get_current():
+    jsdata = request.get_json()
+    print(stocks.getCurrent(jsdata['symbol']))
+    return 'sdlfk'
 
 
 if __name__ == '__main__':

@@ -105,6 +105,9 @@ def maintwitter(word):
     # calling function to get tweets
     tweets = api.get_tweets(query = str_join(word, ' company'), count = 1000)
 
+    if not tweets:
+        return "Twitter overloaded"
+
     # picking positive tweets from tweets
     ptweets = [tweet for tweet in tweets if tweet['sentiment'] == 'positive']
     # percentage of positive tweets
