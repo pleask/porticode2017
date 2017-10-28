@@ -114,6 +114,19 @@ DataStore.prototype.removeData = function (name) {
   this.notify(this.data);
 };
 
+DataStore.prototype.clickUpdater = function (symbol) {
+  var dataCount = this.data.length;
+  for ( var i = 0 ; i < dataCount; i ++) {
+      if (this.data[i].name === symbol) {
+          this.removeData(symbol);
+          return;
+      }
+  }
+
+  // here we get the data from the server
+  console.log(symbol);
+};
+
 var StockChart = function (canvasID) {
   this.canvasID = canvasID;
 };
@@ -162,9 +175,83 @@ StockChart.prototype.tickerFormat = function () {
   return datasets;
 };
 
-var StockList = function (tableID) {
+var StockList = function (tableID, datastore) {
   this.table = $("#" + tableID);
+  this.datastore = datastore;
+
+  this.stocks = [];
 };
+
+StockList.prototype.setStocks = function (stocks) {
+  this.stocks = stocks;
+  this.writeLines();
+};
+
+/*stocks will look like
+  {
+    'symbol',
+    'name',
+    'value',
+    'predicted'
+  }
+ */
+
+StockList.prototype.writeLines = function () {
+  var that = this;
+  this.stocks.forEach(function (stock) {
+
+    that.table.append(
+      `
+        <tr class="stockrow" data-symbol="${stock.symbol}">
+          <td>${stock.symbol}</td>
+          <td>${stock.name}</td>
+          <td>${stock.value}</td>
+          <td>${stock.predicted}</td>
+        </tr>
+      `
+    );
+  });
+
+
+  $(".stockrow").on('click', function () {
+    that.datastore.clickUpdater($(this).attr("data-symbol"));
+    $(this).toggleClass('table-info');
+  });
+
+};
+
+$(document).ready(function () {
+
+  var testdata = new DataStore();
+
+  var testUser = new StockChart('tickercanvas');
+
+  testdata.addObserver(testUser);
+
+  testdata.addData(sampleData);
+  testdata.addData(sampleData2);
+  testdata.addData(sampleData3);
+  testdata.addData(sampleData4);
+  // testdata.removeData('AAPL');
+
+  var stocks = new StockList ('stocktable', testdata);
+  stocks.setStocks(
+    [
+      {
+        'symbol':'AAPL',
+        'name':'Apple',
+        'value':384,
+        'predicted':0.04
+      },{
+        'symbol':'GOOG',
+        'name':'Google',
+        'value':783,
+        'predicted':-0.02
+      }
+    ]
+  );
+});
+
 
 var sampleData = {
   'name': 'AAPL',
@@ -213,19 +300,3 @@ var sampleData4 = {
   'startDate': '2017-07-24',
   'endDate': '2017-08-04'
 };
-
-
-$(document).ready(function () {
-
-  var testdata = new DataStore();
-
-  var testUser = new StockChart('tickercanvas');
-
-  testdata.addObserver(testUser);
-
-  testdata.addData(sampleData);
-  testdata.addData(sampleData2);
-  testdata.addData(sampleData3);
-  testdata.addData(sampleData4);
-  // testdata.removeData('AAPL');
-});
