@@ -1,39 +1,39 @@
-symbols,Description
-ACC,American Campus Communities Inc
-ACCO,Acco Brands Corp
-ACH,Aluminum Corporation of China Ltd
-ACM,Aecom Technology Corp
-ACN,Accenture Plc
-ACP,Avenue Income Credit Strategies
-ACRE,Ares Commercial Real Estate Cor
-ADX,Adams Express Company
-AEB,Aegon N.V. Perp Cap Secs Floating Rate [Ne]
-AED,Aegon N.V. Perp Cap Secs [Ne]
-AEE,Ameren Corp
-AEG,Aegon N.V.
-AEH,Aegon N.V. Perp Cap Secs
-AEK,Aegon Nv 8.00% Non-Cum Notes Due 2042
-AEL,American Equity Investment Life
-AGM,Federal Agricultural Mortgage Corp
-AGM-A,Federal Agricultural Mortgage
-BZH,Beazer Homes USA
-C,Citigroup Inc
-C-C,Citigroup Inc Prfd C 5.8 P12/31/49 +C
-C-J,Citigroup Inc Prfd C V7.125 P12/31/49 J
-C-K,Citigroup Inc Prfd C V6.875 P12/31/49 K
-FNFV,Fnfv Group of Fidelity National
-FNV,Franco Nev Corp
-FOE,Ferro Corp
-FSB,Franklin Financial Network Inc
-FSCE,Fifth Street Finance Corp
-FSD,High Income Long Short Fund
-FSIC,FS Investment Corp
-FSM,Fortuna Silver Mines
-FSS,Federal Signal Corp
-FT,Franklin Universal Trust
-SUP,Superior Industries International
-SUPV,Grupo Supervielle S.A.
-SWN,Southwestern Energy Company
-ZB-A,Zions Bc Dp Shs A
-ZB-G,Zions Bancorporation
-ZB-H,Zions Bancorporation
+symbols,Description,price
+ACC,American Campus Communities Inc,42.08
+ACCO,Acco Brands Corp,13.05
+ACH,Aluminum Corporation of China Ltd,20.27
+ACM,Aecom Technology Corp,35.23
+ACN,Accenture Plc,143.28
+ACP,Avenue Income Credit Strategies,14.61
+ACRE,Ares Commercial Real Estate Cor,13.01
+ADX,Adams Express Company,15.64
+AEB,Aegon N.V. Perp Cap Secs Floating Rate [Ne],24.40
+AED,Aegon N.V. Perp Cap Secs [Ne],26.0121
+AEE,Ameren Corp,61.80
+AEG,Aegon N.V.,5.85
+AEH,Aegon N.V. Perp Cap Secs,25.83
+AEK,Aegon Nv 8.00% Non-Cum Notes Due 2042,26.58
+AEL,American Equity Investment Life,30.10
+AGM,Federal Agricultural Mortgage Corp,75.52
+AGM-A,Federal Agricultural Mortgage,73.70
+BZH,Beazer Homes USA,19.94
+C,Citigroup Inc,73.87
+C-C,Citigroup Inc Prfd C 5.8 P12/31/49 +C,0
+C-J,Citigroup Inc Prfd C V7.125 P12/31/49 J,0
+C-K,Citigroup Inc Prfd C V6.875 P12/31/49 K,0
+FNFV,Fnfv Group of Fidelity National,17.55
+FNV,Franco Nev Corp,79.24
+FOE,Ferro Corp,23.68
+FSB,Franklin Financial Network Inc,36.10
+FSCE,Fifth Street Finance Corp,25.15
+FSD,High Income Long Short Fund,17.00
+FSIC,FS Investment Corp,8.00
+FSM,Fortuna Silver Mines,4.31
+FSS,Federal Signal Corp,21.39
+FT,Franklin Universal Trust,7.31
+SUP,Superior Industries International,16.15
+SUPV,Grupo Supervielle S.A.,25.72
+SWN,Southwestern Energy Company,5.44
+ZB-A,Zions Bc Dp Shs A,0
+ZB-G,Zions Bancorporation,0
+ZB-H,Zions Bancorporation,0

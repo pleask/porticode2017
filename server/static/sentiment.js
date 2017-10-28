@@ -68,10 +68,10 @@ $(document).ready(function() {
   };
 
   testlist = [
-    {'name':'Apple', 'symbol': 'APPL'},
-    {'name':'Google', 'symbol': 'GOOG'},
-    {'name':'Microsoft', 'symbol': 'MCST'},
-    {'name':'Yahoo', 'symbol': 'YAHO'},
+    {'name':'Citigroup', 'symbol': 'C'},
+    {'name':'Aegon', 'symbol': 'AEG'},
+    {'name':'Microsoft', 'symbol': 'MSFT'},
+    {'name':'Yahoo', 'symbol': 'YHOO'},
   ];
 
   var senttab = new SentimentList('twittertable', testlist);

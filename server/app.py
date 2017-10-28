@@ -1,5 +1,6 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, make_response
 from resources import twittersentiment, stocklist, stocks
+from json import dumps
 
 app = Flask(__name__)
 
@@ -33,16 +34,11 @@ def get_twitter():
         data = "Twitter is dead"
     return data
 
+import json
 @app.route('/stocklist')
 def get_stocks():
-    return jsonify(stocklist.getlist())
-
-@app.route('/currentprice', methods = ['POST'])
-def get_current():
-    jsdata = request.get_json()
-    print(stocks.getCurrent(jsdata['symbol']))
-    return 'sdlfk'
-
+    print(stocklist.getlist())
+    return make_response(dumps(stocklist.getlist()))
 
 if __name__ == '__main__':
     app.run(debug = True, host = '0.0.0.0')
