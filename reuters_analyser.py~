@@ -46,7 +46,6 @@ for cell in (df['Description']):
 		driver.back()
 
 	    except: 
-                print("bad")
                 bad_sentiment_list.append(what_company)
 
 	
