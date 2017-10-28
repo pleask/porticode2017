@@ -1,6 +1,6 @@
 from textblob import TextBlob
 from selenium import webdriver
-import numpy as np 
+import numpy as np
 
 what_company = raw_input("What company do you want sentiment analysis to be done on? ")
 n_articles = raw_input("On how many top articles? ")
@@ -12,11 +12,11 @@ search = "http://uk.reuters.com/search/news?blob=" + search_term
 driver = webdriver.Firefox()
 driver.get(search)
 
-number_of_articles = int(n_articles) 
+number_of_articles = int(n_articles)
 sentiment =[]
 
-for i in range(number_of_articles): 
-    i = i + 1 
+for i in range(number_of_articles):
+    i = i + 1
     driver.get(search)
     link_url = "/html/body/div[5]/section[2]/div/div[1]/div[4]/div/div[3]/div[" + str(i) + "]/div/h3/a"
     elem = driver.find_element_by_xpath(link_url)
@@ -28,6 +28,4 @@ for i in range(number_of_articles):
         sentiment.append((sentence.sentiment.polarity))
     driver.back()
 
-print("The sentiment surrounding " + search_term +  " is " + str(np.mean(sentiment))) 
-
-
+print("The sentiment surrounding " + search_term +  " is " + str(np.mean(sentiment)))
