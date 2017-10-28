@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, jsonify
 
 app = Flask(__name__)
 
@@ -21,6 +21,14 @@ def sentiment():
 @app.route("/profile")
 def profile():
     return render_template("profile.html")
+
+
+@app.route('/twitter', methods = ['POST'])
+def get_twitter():
+    jsdata = request.get_json()
+    print(jsdata)
+    return jsonify({'response':'slkjdlaksjdf'})
+
 
 if __name__ == '__main__':
     app.run(debug = True, host = '0.0.0.0')
