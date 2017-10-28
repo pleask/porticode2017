@@ -41,9 +41,9 @@ class TwitterClient(object):
         '''
         return ' '.join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)", " ", tweet).split())
 
-
+    
     sentiment = []
-
+    
     def get_tweet_sentiment(self, tweet):
         '''
         Utility function to classify sentiment of passed tweet
@@ -100,52 +100,67 @@ class TwitterClient(object):
 
 
 def maintwitter(word):
+    
+    # in case length of tweets found here is 0
+    posTweetsCompany = 0
+    negTweetsCompany = 0
+    posTweetsStock = 0
+    negTweetsStock = 0
+    posTweetsBlank = 0
+    negTweetsBlank = 0
+    
     # creating object of TwitterClient Class
     api = TwitterClient()
     # calling function to get tweets
     tweets = api.get_tweets(query = str_join(word, ' company'), count = 1000)
 
-    if not tweets:
-        return "Twitter overloaded"
+    if tweets is not None:
+        if len(tweets) != 0:
 
-    # picking positive tweets from tweets
-    ptweets = [tweet for tweet in tweets if tweet['sentiment'] == 'positive']
-    # percentage of positive tweets
-    #print("Positive tweets percentage (company): {} %".format(100*len(ptweets)/len(tweets)))
-    posTweetsCompany = 100*len(ptweets)/len(tweets)
-    # picking negative tweets from tweets
-    ntweets = [tweet for tweet in tweets if tweet['sentiment'] == 'negative']
-    # percentage of negative tweets
-    #print("Negative tweets percentage (company): {} %".format(100*len(ntweets)/len(tweets)))
-    negTweetsCompany = 100*len(ntweets)/len(tweets)
+            # picking positive tweets from tweets
+            ptweets = [tweet for tweet in tweets if tweet['sentiment'] == 'positive']
+            # percentage of positive tweets
+            #print("Positive tweets percentage (company): {} %".format(100*len(ptweets)/len(tweets)))
+            posTweetsCompany = 100*len(ptweets)/len(tweets)
+            # picking negative tweets from tweets
+            ntweets = [tweet for tweet in tweets if tweet['sentiment'] == 'negative']
+            # percentage of negative tweets
+            #print("Negative tweets percentage (company): {} %".format(100*len(ntweets)/len(tweets)))
+            negTweetsCompany = 100*len(ntweets)/len(tweets)
 
         # calling function to get tweets
     tweets = api.get_tweets(query = str_join(word, ' stock'), count = 1000)
 
-    # picking positive tweets from tweets
-    ptweets = [tweet for tweet in tweets if tweet['sentiment'] == 'positive']
-    # percentage of positive tweets
-    #print("Positive tweets percentage (stock): {} %".format(100*len(ptweets)/len(tweets)))
-    posTweetsStock = 100*len(ptweets)/len(tweets)
-    # picking negative tweets from tweets
-    ntweets = [tweet for tweet in tweets if tweet['sentiment'] == 'negative']
-    # percentage of negative tweets
-    #print("Negative tweets percentage (stock): {} %".format(100*len(ntweets)/len(tweets)))
-    negTweetsStock = 100*len(ntweets)/len(tweets)
+    if tweets is not None:
+        if len(tweets) != 0:
+
+            # picking positive tweets from tweets
+            ptweets = [tweet for tweet in tweets if tweet['sentiment'] == 'positive']
+            # percentage of positive tweets
+            #print("Positive tweets percentage (stock): {} %".format(100*len(ptweets)/len(tweets)))
+            posTweetsStock = 100*len(ptweets)/len(tweets)
+            # picking negative tweets from tweets
+            ntweets = [tweet for tweet in tweets if tweet['sentiment'] == 'negative']
+            # percentage of negative tweets
+            #print("Negative tweets percentage (stock): {} %".format(100*len(ntweets)/len(tweets)))
+            negTweetsStock = 100*len(ntweets)/len(tweets)
 
         # calling function to get tweets
     tweets = api.get_tweets(query = word, count = 1000)
 
-    # picking positive tweets from tweets
-    ptweets = [tweet for tweet in tweets if tweet['sentiment'] == 'positive']
-    # percentage of positive tweets
-    #print("Positive tweets percentage: {} %".format(100*len(ptweets)/len(tweets)))
-    posTweetsBlank = 100*len(ptweets)/len(tweets)
-    # picking negative tweets from tweets
-    ntweets = [tweet for tweet in tweets if tweet['sentiment'] == 'negative']
-    # percentage of negative tweets
-    #print("Negative tweets percentage: {} %".format(100*len(ntweets)/len(tweets)))
-    negTweetsBlank = 100*len(ntweets)/len(tweets)
+    if tweets is not None:
+        if len(tweets) !=0:
+
+            # picking positive tweets from tweets
+            ptweets = [tweet for tweet in tweets if tweet['sentiment'] == 'positive']
+            # percentage of positive tweets
+            #print("Positive tweets percentage: {} %".format(100*len(ptweets)/len(tweets)))
+            posTweetsBlank = 100*len(ptweets)/len(tweets)
+            # picking negative tweets from tweets
+            ntweets = [tweet for tweet in tweets if tweet['sentiment'] == 'negative']
+            # percentage of negative tweets
+            #print("Negative tweets percentage: {} %".format(100*len(ntweets)/len(tweets)))
+            negTweetsBlank = 100*len(ntweets)/len(tweets)
 
 
     posOverall = 0.1*posTweetsBlank + 0.3*posTweetsCompany + 0.6*posTweetsStock
@@ -156,9 +171,13 @@ def maintwitter(word):
     #print("Overall positive percentage:", posOverall)
     #print("Overall negative percentage:", negOverall)
     #print("Average polarity score:", numpy.mean(sentiment))
-
-    d = {"positive": posOverall, "negative":negOverall, "score":numpy.mean(sentiment), "posComp": posTweetsCompany, "negComp": negTweetsCompany, "posSto": posTweetsStock, "negSto": negTweetsStock, "posWord":posTweetsBlank, "negWord":negTweetsBlank}
-
+    
+    d = {"company": word, "postive": posOverall, "negative":negOverall, "score":numpy.mean(sentiment), 
+         "posComp": posTweetsCompany, "negComp": negTweetsCompany, "posSto": posTweetsStock,
+         "negSto": negTweetsStock, "posWord":posTweetsBlank, "negWord":negTweetsBlank}
+    
     return(d)
 
-maintwitter("Apple")
+
+sentiment = []
+maintwitter("apple")
