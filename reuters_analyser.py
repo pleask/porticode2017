@@ -2,6 +2,7 @@ import pandas as pd
 from textblob import TextBlob
 from selenium import webdriver
 import numpy as np
+import json
 
 df = pd.read_csv("./NYSEcut.csv")
 
@@ -50,18 +51,20 @@ for cell in (df['Description']):
                 bad_sentiment_list.append(what_company)
 
 	
+	
 	print("The sentiment surrounding " + search_term +  " is " + str(np.mean(sentiment)))
+	
 	sentiment_list.append(np.mean(sentiment))
+	with open('stock_Description_saved', 'w') as fout:
+            json.dump(cell_list, fout)
+
+
+	with open('sentiment_list_saved', 'w') as fout2:
+            json.dump(sentiment_list, fout2)
+
+	with open('bad_sentiment_list_saved', 'w') as fout3:
+            json.dump(bad_sentiment_list, fout3)
+	
 	driver.close()
-
-with open('stock_Description_saved', 'w') as fout:
-    json.dump(cell_list, fout)
-
-
-with open('sentiment_list_saved', 'w') as fout2:
-    json.dump(sentiment_list, fout2)
-
-with open('bad_sentiment_list_saved', 'w') as fout3:
-    json.dump(bad_sentiment_list, fout3)
 
 
