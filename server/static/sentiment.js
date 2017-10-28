@@ -23,16 +23,45 @@ $(document).ready(function() {
     var that = this;
     this.stocks.forEach(function (stock) {
 
-      getSentiment(stock.name);
+      var sentimentresponse;
+      $.ajax({
+        type: "POST",
+        url: "/twitter",
+        contentType: "application/json",
+        data: JSON.stringify({'data':stock.name}),
+        dataType:'json',
+        success: function (response) {
+          sentimentresponse = response;
+          console.log(response);
+          that.table.append(
+            `
+              <tr class="stockrow" data-symbol="${stock.symbol}">
+                <td>${stock.symbol}</td>
+                <td>${stock.name}</td>
+                <td>${sentimentresponse.posComp}</td>
+                <td>${sentimentresponse.negComp}</td>
+                <td>${sentimentresponse.posSto}</td>
+                <td>${sentimentresponse.negSto}</td>
+                <td>${sentimentresponse.posWord}</td>
+                <td>${sentimentresponse.negWord}</td>
+                <td>${sentimentresponse.positive}</td>
+                <td>${sentimentresponse.negative}</td>
+                <td>${sentimentresponse.score}</td>
+              </tr>
+            `
+          )
+
+          return sentimentresponse;
+        },
+        error: function (err) {
+          console.log('error', err);
+          return;
+        }
+      });
 
       // that.table.append(
       //   `
-      //     <tr class="stockrow" data-symbol="${stock.symbol}">
-      //       <td>${stock.symbol}</td>
-      //       <td>${stock.name}</td>
-      //       <td>${stock.value}</td>
-      //       <td>${stock.predicted}</td>
-      //     </tr>
+
       //   `
       // );
     });
@@ -45,31 +74,7 @@ $(document).ready(function() {
     {'name':'Yahoo', 'symbol': 'YAHO'},
   ];
 
-  var senttab = new SentimentList('sentimenttable', testlist);
+  var senttab = new SentimentList('twittertable', testlist);
   senttab.writeLines();
 
-  function getSentiment(name) {
-    console.log('getsentiment', name);
-    var sentimentresponse;
-    $.ajax({
-      type: "POST",
-      url: "/twitter",
-      contentType: "application/json",
-      data: JSON.stringify({'data':'blackrock'}),
-      dataType:'json',
-      success: function (response) {
-        sentimentresponse = response;
-        console.log(sentimentresponse);
-
-        return sentimentresponse;
-      },
-      error: function (err) {
-        console.log('error', err);
-        return;
-      }
-    });
-
-
-
-  }
 });

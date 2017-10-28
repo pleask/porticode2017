@@ -28,7 +28,7 @@ def profile():
 @app.route('/twitter', methods = ['POST'])
 def get_twitter():
     jsdata = request.get_json()
-    print(twittersentiment.maintwitter(jsdata['data']))
+    print(jsdata)
     return jsonify(twittersentiment.maintwitter(jsdata['data']))
 
 
