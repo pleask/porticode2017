@@ -1,4 +1,6 @@
 from flask import Flask, render_template, request, jsonify
+from resources import twittersentiment
+
 
 app = Flask(__name__)
 
@@ -26,8 +28,8 @@ def profile():
 @app.route('/twitter', methods = ['POST'])
 def get_twitter():
     jsdata = request.get_json()
-    print(jsdata)
-    return jsonify({'response':'slkjdlaksjdf'})
+    print(twittersentiment.maintwitter(jsdata['data']))
+    return jsonify(twittersentiment.maintwitter(jsdata['data']))
 
 
 if __name__ == '__main__':
