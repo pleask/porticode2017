@@ -151,11 +151,28 @@ StockChart.prototype.update = function (data) {
 };
 
 StockChart.prototype.plot = function () {
-  console.log("plot")
   var that = this;
   var ctx = document.getElementById('tickercanvas').getContext('2d');
   var myChart = new Chart(ctx, {
     type: 'line',
+    xAxis: {
+      title: 'date',
+      type: 'datetime',
+      time: {
+
+      displayFormats: {
+           'millisecond': 'MMM DD',
+           'second': 'MMM DD',
+           'minute': 'MMM DD',
+           'hour': 'MMM DD',
+           'day': 'MMM DD',
+           'week': 'MMM DD',
+           'month': 'MMM DD',
+           'quarter': 'MMM DD',
+           'year': 'MMM DD',
+        }
+      },
+    },
     data: {
       labels: that.labelsFormat(),
       datasets: that.tickerFormat()
@@ -168,8 +185,7 @@ StockChart.prototype.labelsFormat = function () {
 
   this.data[0].data.forEach(function (datum) {
     if (!datum) {return;}
-    console.log(datum);
-    labels.push(new Date(datum.Date));
+    labels.push((datum.Date));
   });
   return labels;
 };

@@ -24,7 +24,6 @@ for col in data:
     data[col] = currcol
     prevcol = currcol
 
-print(data)
 
 for col in data:
     currcol = data[col]

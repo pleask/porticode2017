@@ -99,7 +99,7 @@ class TwitterClient(object):
             print("Error : " + str(e))
 
 
-def maintwitter(word):
+def main(word):
 
     # in case length of tweets found here is 0
     posTweetsCompany = 0
@@ -178,6 +178,28 @@ def maintwitter(word):
 
     return(d)
 
+import pandas as pd
+twitter_sentiment = pd.read_csv('twittersentiment.csv')
+twitter_sentiment = twitter_sentiment.drop(twitter_sentiment.columns[[0]], axis = 1)
+def maintwitter(word):
+    row = twitter_sentiment.loc[twitter_sentiment['company'] == word].to_dict(orient='records')
+    return row
 
-sentiment = []
-maintwitter("apple")
+# names = pd.read_csv('../NYSEcut.csv')
+# names = names.drop('price', axis=1)
+# names.columns = ['symbol', 'name']
+# names = names.to_dict('records')
+#
+# import json
+# with open('names.json', 'w') as outfile:
+#     json.dump(names, outfile)
+
+# import pandas as pd
+# df = pd.read_csv("../NYSEcut.csv")
+# output = []
+# for i, row in df.iterrows():
+#     output.append(maintwitter(row['Description']))
+#     print(row['Description'])
+# output = pd.DataFrame(output)
+# outy = pd.concat([df, output], axis=1)
+# outy.to_csv('twittersentiment.csv')
