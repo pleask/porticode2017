@@ -70,31 +70,8 @@ class Lstm_sf(object):
         for j in range(len(self.data_ticks[num])):
             data_list.append(self.data_ticks[num][j]['Open'])
 
-        # # else:
-        # for symbol in ticker_symb:
-        #     symb_list = [0 for i in ticker_symb]
-        #     num = 0
-        #     list_num = 0
-        #     # get number assigned to the symb name from data names
-        #     for i in self.data_names[0]:
-        #         if i == symbol:
-        #             num = i 
-        #     # use number in outputting correct list from data_input
-        #     for j in range(len(self.data_ticks[num])):
-        #         symb_list.append(self.data_ticks[num][j]['Open'])
-            
-        #     data_list[list_num] = symb_list
-        #     list_num += 1
+        return data_list
 
-        # self.data_input = convert_to_df(data_list)
-        ### convert to data_input
-        return data_list #self.data_input # when training, will have to iterate through the list to convert to pd-df
-
-        # def convert_to_df(self, data_lst):
-        #     df_list = [0 for i in data_lst]
-        #     for i in data_lst:
-        #         df_list[i] =  pd.DataFrame(data_lst) 
-        #     return df_list
 
         def data_plotter(self, data_input, ticker_symb):
             ''' drop the nan '''
