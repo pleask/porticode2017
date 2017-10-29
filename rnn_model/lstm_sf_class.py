@@ -5,7 +5,8 @@ from keras.models import Sequential
 from keras.layers import Dense, LSTM
 import json
 
-class Lstm_sf(object):
+
+class Lstm_sf(object):    
     def __init__(self, tsteps=2, lahead=1, batch_size=1, epochs=10, d_ticks='data_list_saved.json', d_names='stock_names_saved.json'):
         self.tsteps = tsteps
         self.lahead = lahead
@@ -23,15 +24,16 @@ class Lstm_sf(object):
     def plot(self, symbol_list):
         self.data_ticks, self.data_names = self.data_loader()
         for ticker in symbol_list:
-            state_test()
-            data_input = pd.DataFrame(choose_symb(ticker)) 
-            data_plotter(data_input, ticker)
+            self.state_test()
+            data_input = pd.DataFrame(self.choose_symb(ticker)) 
+            self.data_plotter(data_input, ticker)
     
             ########
             print('Creating Stateful Model...')
-            model_stateful = create_model(stateful=True)        
-            train_and_plot(data_input)
-
+            model_stateful = self.create_model(stateful=True)        
+            self.train_and_plot(data_input)
+        
+        pass
 
 
 ###################################################
@@ -53,7 +55,7 @@ class Lstm_sf(object):
         else:
             print("STATELESS LSTM WILL NOT CONVERGE")
         print("*" * 33)
-
+        pass
 
     def choose_symb(self, ticker_symb=['AAPL']):
         ''' 
