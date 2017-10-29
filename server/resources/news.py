@@ -6,4 +6,4 @@ with open ('../sentiment_list_saved') as data_file:
 
 names = pd.read_csv('../NYSEcut.csv')
 
-print(len(data), len(names)) #wtf??
+print(data, len(data), len(names)) #wtf??
