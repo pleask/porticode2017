@@ -233,23 +233,42 @@ StockList.prototype.setStocks = function (stocks) {
 StockList.prototype.writeLines = function () {
   var that = this;
   this.stocks.forEach(function (stock) {
-    that.table.append(
-      `
-        <tr class="stockrow" data-symbol="${stock.symbols}">
-          <td>${stock.symbols}</td>
-          <td>${stock.Description}</td>
-          <td>${stock.price}</td>
-          <td>${stock.predicted}</td>
-        </tr>
-      `
-    );
+
+    console.log(stock)
+
+    $.ajax({
+      type: "POST",
+      url: "/predict",
+      contentType: "application/json",
+      data: JSON.stringify({'data':stock.symbols}),
+      dataType:'json',
+      success: function (response) {
+        that.table.append(
+          `
+            <tr class="stockrow" data-symbol="${stock.symbols}">
+              <td>${stock.symbols}</td>
+              <td>${stock.Description}</td>
+              <td>${stock.price}</td>
+              <td>${response.data[0].toFixed(2)}</td>
+              <td>${response.data[1].toFixed(2)}</td>
+              <td>${response.data[2].toFixed(2)}</td>
+              <td>${response.data[3].toFixed(2)}</td>
+              <td>${response.data[4].toFixed(2)}</td>
+            </tr>
+          `
+        );
+        $(".stockrow").on('click', function () {
+          that.datastore.clickUpdater($(this).attr("data-symbol"));
+          $(this).toggleClass('table-info');
+        });
+      },
+      error: function (err) {}
+    });
+
   });
 
 
-  $(".stockrow").on('click', function () {
-    that.datastore.clickUpdater($(this).attr("data-symbol"));
-    $(this).toggleClass('table-info');
-  });
+
 
 };
 
