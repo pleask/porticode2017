@@ -27,10 +27,10 @@ class Lstm_sf(object):
             data_input = pd.DataFrame(choose_symb(ticker)) 
             data_plotter(data_input, ticker)
     
-            #########
+            ########
             print('Creating Stateful Model...')
             model_stateful = create_model(stateful=True)        
-            train_and_plot()
+            train_and_plot(data_input)
 
 
 
@@ -153,7 +153,7 @@ class Lstm_sf(object):
 
     # split train/test data
 def split_data(self, x, y, ratio: int = 0.8):
-    to_train = int(len(data_input) * ratio)
+    to_train = int(len(x) * ratio)
     # tweak to match with batch_size
     to_train -= to_train % self.batch_size
 
@@ -180,7 +180,7 @@ def split_data(self, x, y, ratio: int = 0.8):
     return (x_train, y_train), (x_test, y_test)
 
 
-    def train_and_plot(self):
+    def train_and_plot(self, data_input):
         expected_output = data_input.rolling(window=self.tsteps, center=False).mean()
         (x_train, y_train), (x_test, y_test) = self.split_data(data_input, expected_output)
         for i in range(self.epochs):
