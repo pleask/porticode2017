@@ -27,7 +27,6 @@ def profile():
 @app.route('/twitter', methods = ['POST'])
 def get_twitter():
     jsdata = request.get_json()
-    print(jsdata)
     try:
         data = jsonify(twittersentiment.maintwitter(jsdata['data']))
     except TypeError:
@@ -38,7 +37,6 @@ def get_twitter():
 import json
 @app.route('/stocklist')
 def get_stocks():
-    print(stocklist.getlist())
     return make_response(dumps(stocklist.getlist()))
 
 @app.route("/stockdata", methods = ['POST'])
@@ -49,7 +47,12 @@ def stock_data():
 @app.route("/news", methods = ['POST'])
 def get_news():
     jsdata = request.get_json()
-    print(jsdata)
+    data = jsonify({'data': news.newssentiment(jsdata['data'])})
+    return data
+
+@app.route("/predict", methods = ['POST'])
+def predict_values():
+    jsdata = request.get_json()
 
 
 if __name__ == '__main__':
