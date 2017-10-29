@@ -91,7 +91,6 @@ DataStore.prototype.addData = function (data) {
 
   this.data.push(newdata);
 
-
   this.notify(this.data);
 };
 
@@ -123,8 +122,23 @@ DataStore.prototype.clickUpdater = function (symbol) {
       }
   }
 
+  var newdata;
+  var that = this;
   // here we get the data from the server
-  console.log(symbol, this);
+  $.ajax({
+    type: "POST",
+    url: "/stockdata",
+    contentType: "application/json",
+    data: JSON.stringify({'symbol':symbol}),
+    dataType:'json',
+    success: function (response) {
+      newdata = response;
+      that.addData(response)
+    },
+    error: function (err) {
+      console.log('error', err);
+    }
+  });
 };
 
 var StockChart = function (canvasID) {
@@ -137,7 +151,7 @@ StockChart.prototype.update = function (data) {
 };
 
 StockChart.prototype.plot = function () {
-
+  console.log("plot")
   var that = this;
   var ctx = document.getElementById('tickercanvas').getContext('2d');
   var myChart = new Chart(ctx, {
@@ -151,8 +165,11 @@ StockChart.prototype.plot = function () {
 
 StockChart.prototype.labelsFormat = function () {
   labels = [];
+
   this.data[0].data.forEach(function (datum) {
-    labels.push(new Date(datum.date));
+    if (!datum) {return;}
+    console.log(datum);
+    labels.push(new Date(datum.Date));
   });
   return labels;
 };
@@ -164,14 +181,12 @@ StockChart.prototype.tickerFormat = function () {
       currdata.label = dataSet.name;
       currdata.data = [];
       dataSet.data.forEach( function (x) {
-        currdata.data.push(x.price);
+        currdata.data.push(x.Open);
       });
       currdata.borderColor = dataSet.color;
       currdata.fill = false;
       datasets.push(currdata);
   });
-
-
   return datasets;
 };
 

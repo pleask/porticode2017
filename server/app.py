@@ -40,5 +40,11 @@ def get_stocks():
     print(stocklist.getlist())
     return make_response(dumps(stocklist.getlist()))
 
+@app.route("/stockdata", methods = ['POST'])
+def stock_data():
+    jsdata = request.get_json()
+
+    return(jsonify(stocks.getdata(jsdata['symbol'])))
+
 if __name__ == '__main__':
     app.run(debug = True, host = '0.0.0.0')

@@ -23,6 +23,8 @@ $(document).ready(function() {
     var that = this;
     this.stocks.forEach(function (stock) {
 
+      console.log(stock);
+
       var sentimentresponse;
       $.ajax({
         type: "POST",
@@ -32,7 +34,6 @@ $(document).ready(function() {
         dataType:'json',
         success: function (response) {
           sentimentresponse = response;
-          console.log(response);
           that.table.append(
             `
               <tr class="stockrow" data-symbol="${stock.symbol}">

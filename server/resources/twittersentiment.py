@@ -172,7 +172,7 @@ def maintwitter(word):
     #print("Overall negative percentage:", negOverall)
     #print("Average polarity score:", numpy.mean(sentiment))
 
-    d = {"company": word, "positive": posOverall, "negative":negOverall, "score":numpy.mean(sentiment), 
+    d = {"company": word, "positive": posOverall, "negative":negOverall, "score":numpy.mean(sentiment),
          "posComp": posTweetsCompany, "negComp": negTweetsCompany, "posSto": posTweetsStock,
          "negSto": negTweetsStock, "posWord":posTweetsBlank, "negWord":negTweetsBlank}
 
