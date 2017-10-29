@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, jsonify, make_response
-from resources import twittersentiment, stocklist, stocks, news
+from resources import twittersentiment, stocklist, stocks, news, estimates
 from json import dumps
 
 app = Flask(__name__)
@@ -52,7 +52,12 @@ def get_news():
 
 @app.route("/predict", methods = ['POST'])
 def predict_values():
+    print(request)
     jsdata = request.get_json()
+
+    print(jsdata)
+    data = jsonify({'data': estimates.get_estimate(jsdata['data'])})
+    return data
 
 
 if __name__ == '__main__':
