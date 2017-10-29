@@ -234,8 +234,6 @@ StockList.prototype.writeLines = function () {
   var that = this;
   this.stocks.forEach(function (stock) {
 
-    console.log(stock)
-
     $.ajax({
       type: "POST",
       url: "/predict",
